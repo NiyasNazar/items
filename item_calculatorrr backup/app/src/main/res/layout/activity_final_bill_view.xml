@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Final_bill_view">
+    <LinearLayout
+        android:id="@+id/lltbl"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btn_share_bill"
+            android:layout_weight="1"
+            android:text="Share"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Button
+            android:layout_weight="1"
+            android:text="Print"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <TableLayout
+        android:layout_below="@+id/lltbl"
+        android:layout_marginTop="10dp"
+        android:id="@+id/table_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/table_row1"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/name"
+                android:fontFamily="serif"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:textColor="#000"
+                android:text="Item"/>
+            <TextView
+                android:id="@+id/age"
+                android:textColor="#000"
+                android:fontFamily="serif"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:text="Qty"/>
+            <TextView
+                android:textColor="#000"
+                android:id="@+id/position"
+                android:fontFamily="serif"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:text="Rate"/>
+            <TextView
+                android:textColor="#000"
+                android:id="@+id/address"
+                android:fontFamily="serif"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:text="Amount"/>
+
+        </TableRow>
+
+        <View
+            android:layout_height="3dip"
+            android:layout_width="match_parent"
+            android:background="#ff0000"/>
+
+    </TableLayout>
+
+    <TableLayout
+        android:layout_above="@id/llb"
+        android:id="@+id/tt"
+        android:background="@color/colorAccent"
+        android:layout_below="@id/records_view"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TableRow
+
+            android:layout_height="wrap_content"
+            android:layout_width="50dp">
+            <TextView
+                android:textColor="#000"
+
+                android:fontFamily="serif"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:text="Total"/>
+            <TextView
+                android:textColor="#000"
+                android:layout_marginRight="3dp"
+                android:fontFamily="serif"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_weight="0"
+                android:text="500"/>
+        </TableRow>
+
+    </TableLayout>
+    // add a listview to display our table records
+    <ListView
+        android:layout_below="@id/table_layout"
+
+        android:id="@+id/records_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp">
+    </ListView>
+    <LinearLayout
+android:visibility="gone"
+        android:id="@+id/llb"
+        android:layout_alignParentBottom="true"
+        android:background="#02D09D"
+        android:layout_width="match_parent"
+        android:layout_height="35dp">
+        <ImageView
+
+            android:backgroundTint="#FFFFFF"
+            android:background="@drawable/ic_action_back"
+            android:layout_width="25dp"
+            android:layout_height="45dp" />
+    </LinearLayout>
+</RelativeLayout>
+
+
+

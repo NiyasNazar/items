@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical" >
+    <LinearLayout
+        android:layout_marginTop="40dp"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:background="@drawable/searchview_bg"
+            android:layout_weight="1"
+            android:layout_width="110dp"
+            android:layout_height="48dp">
+        <ImageView
+            android:id="@+id/imageview"
+android:background="@drawable/opmenu"
+            android:scaleType="fitXY"
+            android:layout_weight="1"
+            android:layout_width="75dp"
+            android:layout_height="45dp" />
+        </LinearLayout>
+        <android.support.v7.widget.SearchView
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:id="@+id/searchView"
+            android:background="@drawable/searchview_bg"></android.support.v7.widget.SearchView>
+        <Button
+            android:textColor="#FFFFFF"
+            android:background="@drawable/login_btn"
+            android:layout_marginLeft="8dp"
+            android:text="Final bill"
+android:id="@+id/btn_final_bill"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginTop="25dp"
+    android:baselineAligned="false"
+android:layout_marginLeft="0dp"
+    android:layout_marginRight="8dp"
+    android:orientation="horizontal" >
+
+    <FrameLayout
+        android:id="@+id/fragment1"
+        android:layout_weight="1"
+        android:background="#ffffff"
+        android:layout_width="0px"
+        android:layout_height="match_parent" >
+       <!-- <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+       <Button
+           android:text="Add"
+           android:id="@+id/addcat"
+           android:layout_alignParentBottom="true"
+           android:layout_width="match_parent"
+           android:layout_height="45dp" />
+        </RelativeLayout>--></FrameLayout>
+    <FrameLayout
+android:background="#eee5de"
+        android:id="@+id/fragment2"
+        android:layout_weight="2"
+        android:layout_width="0px"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
+</LinearLayout>
