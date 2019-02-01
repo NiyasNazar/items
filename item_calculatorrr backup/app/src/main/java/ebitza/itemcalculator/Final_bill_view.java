@@ -53,7 +53,8 @@ public class Final_bill_view extends AppCompatActivity {
     Layout_to_Image layout_to_image;
     DatabaseHelper databaseHelper;
     Bitmap bitmap;
-    LinearLayout linearLayout;
+    LinearLayout linearLayout,eroorLayout;
+    RelativeLayout mainLa;
     ImageView imss;
     int total=0;
     Button clickbalance;
@@ -69,6 +70,17 @@ public class Final_bill_view extends AppCompatActivity {
         final ProgressDialog pd = new ProgressDialog(Final_bill_view.this);
         pd.setMessage("Processing ...");
         relativeLayout=(RelativeLayout)findViewById(R.id.containers);
+        mainLa=(RelativeLayout)findViewById(R.id.mainlayout);
+        eroorLayout=(LinearLayout) findViewById(R.id.error_layout);
+        Button go_back=(Button)findViewById(R.id.btn_go_back);
+        go_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent is=new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(is);
+                finish();
+            }
+        });
        // layout_to_image=new Layout_to_Image(Final_bill_view.this,relativeLayout);
 
 
@@ -82,6 +94,15 @@ Enter_balance=(EditText)findViewById(R.id.ed_enter_balance);
         dbManager=new DBManager(getApplicationContext());
         dbManager.open();
         List<Model_bill>datalist=dbManager.get_generate_bill();
+        if (datalist.size()==0){
+        eroorLayout.setVisibility(View.VISIBLE);
+        mainLa.setVisibility(View.GONE);
+        }
+        else{
+            mainLa.setVisibility(View.VISIBLE);
+            eroorLayout.setVisibility(View.GONE);
+
+        }
         Bill_adapter bill_adapter=new Bill_adapter(getApplicationContext(),datalist);
 for (int i=0;i<datalist.size();i++){
 
@@ -122,7 +143,7 @@ sharebill.setOnClickListener(new View.OnClickListener() {
 
 pd.dismiss();
         String pack="com.whatsapp";
-
+dbManager.deletetable();
         String bitmapPath = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap,"title", null);
         Uri bitmapUri = Uri.parse(bitmapPath);
         Intent whatsappIntent = new Intent(Intent.ACTION_SEND);

@@ -230,6 +230,15 @@ cv.put("item_name",itemname);
         database.delete(tablename,"itemid" + "=" + id,null);
        // database.execSQL("DROP TABLE IF EXISTS " + tablename);
     }
+    public void deletetable(){
+        database = dbHelper.getWritableDatabase();
+        database.execSQL("delete from "+ "Bill");
+
+
+
+
+
+    }
 
 
 }

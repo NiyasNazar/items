@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -58,7 +59,7 @@ public class Remove_items extends AppCompatActivity {
                 as=datalist.get(position).getCategory_name();
                 load();
 
-                Toast.makeText(getApplicationContext(), "Clicked " + item, Toast.LENGTH_LONG).show();
+
             }
         });
 
@@ -67,9 +68,10 @@ public class Remove_items extends AppCompatActivity {
         remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (a.equals("")) {
+
+                if (a==null) {
                     Toast.makeText(getApplicationContext(), "Choose category ", Toast.LENGTH_LONG).show();
-                } else if (as2.equals("")) {
+                } else if (as2==null) {
                     Toast.makeText(getApplicationContext(), "Choose Subcategory ", Toast.LENGTH_LONG).show();
                 } else {
                     pd.show();

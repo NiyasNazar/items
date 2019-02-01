@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_margin="15dp"
     android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context=".Remove_items">
@@ -23,7 +24,7 @@
         android:layout_marginEnd="5dp"
         android:id="@+id/spinner_choose_item"
         android:layout_marginTop="10dp"
-        app:ms_hint="Choose Category"
+        app:ms_hint="Choose Subcategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

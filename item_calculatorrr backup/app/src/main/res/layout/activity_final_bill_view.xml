@@ -5,9 +5,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/containers"
+
 android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
     tools:context=".Final_bill_view">
+    <LinearLayout
+        android:id="@+id/error_layout"
+       android:layout_marginTop="45dp"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/tx"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="5dp"
+
+        android:background="@drawable/empty_cart_retina"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+
+    <TextView
+
+        android:layout_marginTop="25dp"
+android:gravity="center"
+        android:textSize="28sp"
+
+        android:text="You dont have any items for generating bill! "
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btn_go_back"
+            android:textColor="#FFFFFF"
+            android:text="Go Back"
+           android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/login_btn"
+            android:layout_width="match_parent"
+            android:layout_height="42dp" />
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/mainlayout"
+        android:visibility="gone"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
 <TextView
     android:id="@+id/tvs"
@@ -197,6 +243,6 @@ android:layout_marginLeft="2dp"
             android:layout_height="wrap_content" />
     </LinearLayout>
 </RelativeLayout>
-
+</RelativeLayout>
 
 
