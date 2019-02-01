@@ -38,6 +38,7 @@ public class Adapter_for_item_list extends RecyclerView.Adapter<Adapter_for_item
     private SimpleCursorAdapter adapter;
     SQLiteDatabase db;
      String a;
+ TextView selected_quantity;
     DatabaseHelper databaseHelper;
     Context mcontext;
     public Adapter_for_item_list(List<Model_category_item> itemList, Context mcontext)
@@ -74,16 +75,33 @@ public class Adapter_for_item_list extends RecyclerView.Adapter<Adapter_for_item
                     byte imgs[]=itemList.get(position).get_img();
                   //  dbManager.additemsforbilling(itemname,itemprice,"0","50");
                     LayoutInflater inflater = (LayoutInflater) mcontext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    View alertLayout = inflater.inflate(R.layout.layout_custom_dialog, null);
-                    NumberPicker numberPicker = alertLayout. findViewById(R.id.number_picker);
-                    numberPicker.setValueChangedListener(new ValueChangedListener() {
+                    View alertLayout = inflater.inflate(R.layout.sample, null);
+                 ImageView implus=alertLayout.findViewById(R.id.imvplus);
+                   selected_quantity=alertLayout.findViewById(R.id.tvqua);
+
+                    implus.setOnClickListener(new View.OnClickListener() {
+                     @Override
+                     public void onClick(View view) {
+                         int a= Integer.parseInt(selected_quantity.getText().toString());
+                         a=a+1;
+                         selected_quantity.setText(""+a);
+
+                     }
+                 });
+                    ImageView imminus=alertLayout.findViewById(R.id.imvminus);
+                    imminus.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void valueChanged(int value, ActionEnum action) {
-                           // Toast.makeText(mcontext, "change"+value, Toast.LENGTH_SHORT).show();
-                             a= String.valueOf(value);
+                        public void onClick(View view) {
+
+                            int a= Integer.parseInt(selected_quantity.getText().toString());
+                            if (a>0) {
+                                a = a - 1;
+                                selected_quantity.setText("" + a);
+                            }
+
+
                         }
                     });
-
 
                     final TextView tvItemname = alertLayout.findViewById(R.id.dialog_item_name);
 
@@ -96,9 +114,15 @@ public class Adapter_for_item_list extends RecyclerView.Adapter<Adapter_for_item
                     final TextView tvItemprice = alertLayout.findViewById(R.id.dialog_item_price);
 
 tvItemprice.setText(itemprice);
-                    Bitmap bmp = BitmapFactory.decodeByteArray(imgs, 0, imgs.length);
+if (imgs==null){
 
-                    imv_item_image.setImageBitmap(bmp);
+}else{
+
+    Bitmap bmp = BitmapFactory.decodeByteArray(imgs, 0, imgs.length);
+
+    imv_item_image.setImageBitmap(bmp);
+}
+
                     Button alertdialogconfir=alertLayout.findViewById(R.id.btn_alert_dialog_confirm);
                     alertdialogconfir.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -107,6 +131,7 @@ tvItemprice.setText(itemprice);
                             Toast.makeText(mcontext,"id"+itemid,Toast.LENGTH_SHORT).show();
 
                             String pp=tvItemprice.getText().toString();
+                            a=selected_quantity.getText().toString();
 
 if (a.equals("0")){
     Toast.makeText(mcontext,"Quantity must be greater than zero",Toast.LENGTH_SHORT).show();
@@ -168,12 +193,18 @@ if (a.equals("0")){
         holder.title.setText(movie.getItemname());
         holder.genre.setText(movie.getItemprice());
         holder.itemquantity.setText(movie.getItemquantity());
-        byte imgs[]=movie.get_img();
-        Bitmap bmp = BitmapFactory.decodeByteArray(imgs, 0, imgs.length);
 
-     holder.imv.setImageBitmap(bmp);
-        Log.i("checkimagssse", Arrays.toString(imgs));
-     //   holder.imv.setImageBitmap(convertToBitmap(movie.get_img()));
+        byte imgs[]=movie.get_img();
+        if (imgs==null){
+
+        }else{
+            Bitmap bmp = BitmapFactory.decodeByteArray(imgs, 0, imgs.length);
+
+            holder.imv.setImageBitmap(bmp);
+            Log.i("checkimagssse", Arrays.toString(imgs));
+            //   holder.imv.setImageBitmap(convertToBitmap(movie.get_img()));
+        }
+
 
     }
 

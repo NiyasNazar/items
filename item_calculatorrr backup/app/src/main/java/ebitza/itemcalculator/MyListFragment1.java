@@ -31,6 +31,13 @@ import ebitza.itemcalculator.Db_Helper.DatabaseHelper;
 import ebitza.itemcalculator.Models.Model_category;
 
 public class MyListFragment1 extends Fragment {
+
+
+
+
+
+
+
     private DBManager dbManager;
     private SimpleCursorAdapter adapter;
     SQLiteDatabase db;

@@ -223,6 +223,13 @@ cv.put("item_name",itemname);
         database = dbHelper.getWritableDatabase();
         database.delete("CATEGORIES","_id" + "=" + id,null);
         database.execSQL("DROP TABLE IF EXISTS " + tablename);
+
     }
+    public void deleteitems(String id,String tablename){
+        database = dbHelper.getWritableDatabase();
+        database.delete(tablename,"itemid" + "=" + id,null);
+       // database.execSQL("DROP TABLE IF EXISTS " + tablename);
+    }
+
 
 }

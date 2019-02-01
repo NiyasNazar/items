@@ -4,20 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:id="@+id/containers"
+android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
     tools:context=".Final_bill_view">
+
+<TextView
+    android:id="@+id/tvs"
+    android:layout_centerHorizontal="true"
+    android:text="Final Bill"
+    android:textStyle="normal"
+    android:textColor="#000"
+    android:textSize="36sp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />
     <LinearLayout
+        android:layout_marginTop="50dp"
         android:id="@+id/lltbl"
+        android:visibility="visible"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/login_btn"
             android:id="@+id/btn_share_bill"
             android:layout_weight="1"
             android:text="Share"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <Button
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/login_btn"
             android:layout_weight="1"
             android:text="Print"
             android:layout_width="match_parent"
@@ -78,58 +100,101 @@
 
     </TableLayout>
 
-    <TableLayout
-        android:layout_above="@id/llb"
-        android:id="@+id/tt"
-        android:background="@color/colorAccent"
-        android:layout_below="@id/records_view"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-        <TableRow
 
-            android:layout_height="wrap_content"
-            android:layout_width="50dp">
-            <TextView
-                android:textColor="#000"
-
-                android:fontFamily="serif"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:text="Total"/>
-            <TextView
-                android:textColor="#000"
-                android:layout_marginRight="3dp"
-                android:fontFamily="serif"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:layout_weight="0"
-                android:text="500"/>
-        </TableRow>
-
-    </TableLayout>
     // add a listview to display our table records
     <ListView
         android:layout_below="@id/table_layout"
-
+android:layout_above="@+id/llb"
         android:id="@+id/records_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="16dp">
     </ListView>
     <LinearLayout
-android:visibility="gone"
+        android:orientation="vertical"
+android:background="#02D09D"
         android:id="@+id/llb"
         android:layout_alignParentBottom="true"
-        android:background="#02D09D"
+android:layout_marginBottom="2dp"
         android:layout_width="match_parent"
-        android:layout_height="35dp">
-        <ImageView
+        android:layout_height="wrap_content">
+        <TableLayout
+android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_above="@id/llb"
+            android:id="@+id/tt"
+android:gravity="center"
+            android:layout_below="@id/records_view"
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+            <TableRow
 
-            android:backgroundTint="#FFFFFF"
-            android:background="@drawable/ic_action_back"
-            android:layout_width="25dp"
-            android:layout_height="45dp" />
+                android:layout_height="wrap_content"
+                android:layout_width="50dp">
+                <TextView
+                    android:textSize="14sp"
+                    android:textColor="#FFFFFF"
+android:textStyle="bold"
+                    android:fontFamily="serif"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:text="Total"/>
+                <TextView
+         android:textSize="14sp"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:layout_marginRight="3dp"
+                    android:fontFamily="serif"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_weight="0"
+                    android:text="@string/Rs"/>
+                <TextView
+                    android:textSize="14sp"
+                    android:id="@+id/tvtotalprice"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:layout_marginRight="3dp"
+                    android:fontFamily="serif"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_weight="0"
+                    android:text="500"/>
+            </TableRow>
+
+        </TableLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textColor="#FFFFFF"
+                android:text="Enter denomination"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/ed_enter_balance"
+                android:layout_marginLeft="5dp"
+                android:inputType="number"
+                android:background="@drawable/ed_search_bg"
+                android:layout_width="70dp"
+                android:layout_height="35dp" />
+            <Button
+
+                android:id="@+id/btn_balance"
+android:layout_marginLeft="2dp"
+                android:textSize="12sp"
+                android:text="Balance"
+                android:layout_width="80dp"
+                android:layout_height="35dp" />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_balance"
+            android:textColor="#FFFFFF"
+            android:layout_gravity="center"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </RelativeLayout>
 

@@ -44,12 +44,13 @@ public class Addcategory extends AppCompatActivity implements View.OnClickListen
 
 
                 dbManager.addcategory(name);
+                categoryEditText.setText("");
 
-                Intent main = new Intent(Addcategory.this, MainActivity.class);
+                /*Intent main = new Intent(Addcategory.this, MainActivity.class);
 
 
                 startActivity(main);
-                finish();
+                finish();*/
                 break;
         }
     }

@@ -56,8 +56,16 @@ public class Add_item_to_categories extends AppCompatActivity {
                 String Itemsname = item_name.getText().toString();
                 String Itemprice = item_price.getText().toString();
                 String Itemquantity=item_quantity.getText().toString();
-                photo=profileImage(bp);
+                if (photo==null){
+
+                }else{
+                    photo=profileImage(bp);
+                }
+
                 dbManager.additemstocategory(tablename, Itemsname, Itemprice,photo,Itemquantity);
+                item_name.setText("");
+                item_price.setText("");
+                item_quantity.setText("");
             }
         });
         chooseimageforproduct.setOnClickListener(new View.OnClickListener() {
