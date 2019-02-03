@@ -45,22 +45,35 @@ public class Test  extends AppCompatActivity {
 
         Log.i("times",formatter.format(date));
 
+current_time=formatter.format(date);
 
 
 
 
+        String launchdate=prefs.getString("launch",null);
+       // Log.i("timess",launchdate);
+        if (current_time.equals(launchdate)){
+
+        }else{
+            final MediaPlayer mp = MediaPlayer.create(Test.this, R.raw.testss);
+            mp.start();
+            prefs.edit().putString("launch",current_time).apply();
+            Log.i("timesss",prefs.getString("launch",null));
+            AlertDialog.Builder b = new AlertDialog.Builder(Test.this);
+            b.setMessage("test6");
+            b.setCancelable(false);
+            b.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            b.setTitle("hi");
+            AlertDialog ad = b.create();
+            ad.show();
+          prefs.edit().putString("lauch",current_time).apply();
 
 
-
-
-
-
-
-
-
-
-
-
+        }
 
 
         Button button = (Button) findViewById(R.id.click);

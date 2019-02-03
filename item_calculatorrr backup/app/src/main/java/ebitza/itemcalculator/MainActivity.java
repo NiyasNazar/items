@@ -3,7 +3,9 @@ package ebitza.itemcalculator;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
@@ -17,17 +19,65 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 String TAG="TAG";
     String table_name;
+    SharedPreferences prefs = null;
+    Calendar alarmcalendar;
+    String current_time;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        prefs = getSharedPreferences("myAppName", MODE_PRIVATE);
         setContentView(R.layout.activity_main);
         int a= Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH);
+        SimpleDateFormat formatter = new SimpleDateFormat(" yyyy-MM-dd");
+        Date date = new Date();
+        /*System.out.println(formatter.format(date));*/
 
+        Log.i("times",formatter.format(date));
+
+        current_time=formatter.format(date);
+        SimpleDateFormat formatter2 = new SimpleDateFormat(" yyyy-MM");
+        Date date2 = new Date();
+        /*System.out.println(formatter.format(date));*/
+
+        Log.i("times",formatter.format(date2));
+String setdate=formatter2.format(date2);
+String notidate=setdate+"-"+a;
+
+        Log.i("timessss",notidate);
+        Toast.makeText(getApplicationContext(),"tt"+notidate,Toast.LENGTH_SHORT).show();
+
+
+        String launchdate=prefs.getString("launch",null);
+        // Log.i("timess",launchdate);
+        if (current_time.equals(notidate)){
+            final MediaPlayer mp = MediaPlayer.create(MainActivity.this, R.raw.testss);
+            mp.start();
+            prefs.edit().putString("launch",current_time).apply();
+            Log.i("timesss",prefs.getString("launch",null));
+            AlertDialog.Builder b = new AlertDialog.Builder(MainActivity.this);
+            b.setMessage("test6");
+            b.setCancelable(false);
+            b.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            b.setTitle("hi");
+            AlertDialog ad = b.create();
+            ad.show();
+            prefs.edit().putString("lauch",current_time).apply();
+        }else{
+
+
+
+        }
         Intent is=getIntent();
      /*   if (getIntent().getExtras()!=null) {
           table_name = is.getStringExtra("str");
