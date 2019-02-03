@@ -17,6 +17,7 @@ import ebitza.itemcalculator.Category_model;
 import ebitza.itemcalculator.Models.Model_bill;
 import ebitza.itemcalculator.Models.Model_category;
 import ebitza.itemcalculator.Models.Model_category_item;
+import ebitza.itemcalculator.Models.Model_sales;
 
 public class DBManager {
     private DatabaseHelper dbHelper;
@@ -37,11 +38,14 @@ public class DBManager {
         dbHelper.close();
     }
     public void addcategory(String name) {
+        database = dbHelper.getWritableDatabase();
         ContentValues contentValue = new ContentValues();
         contentValue.put(DatabaseHelper.SUBJECT, name);
 
         database.insert(DatabaseHelper.TABLE_NAME, null, contentValue);
-        CreateDynamicTables(name);
+        String name2=name.replaceAll("\\s+","");
+        CreateDynamicTables(name2);
+        database.close();
     }
 
 
@@ -95,6 +99,9 @@ public class DBManager {
     }
     public void CreateDynamicTables(String Table_Name)
     {
+
+
+
         String CID="itemid";
         String DName="item_name";
         String PName="item_price";
@@ -110,7 +117,7 @@ public class DBManager {
         cv.put(CID, Contact_ID);
         cv.put(DName, Display_Name);
         database.insert(Table_Name, null, cv);*/
-        database.close();
+       // database.close();
     }
     public void additemstocategory(String tablename,String itemname,String item_price,byte[] photo,String Quantity)
     {
@@ -160,10 +167,11 @@ public class DBManager {
         String PName="item_price";
         String KEY_ITEM_QUANTITY="itemquantity";
         String KEY_Total="itemtotal";
+        String KEY_Date="dates";
 
         database = dbHelper.getWritableDatabase();
      //  database.execSQL("DROP TABLE IF EXISTS " + "BILL");
-        String query = "CREATE TABLE IF NOT EXISTS " + "BILL"+ "(" + BID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + DName + " TEXT, " + PName + " TEXT, " + KEY_ITEM_QUANTITY + " TEXT, " + KEY_Total + " TEXT);";
+        String query = "CREATE TABLE IF NOT EXISTS " + "BILL"+ "(" + BID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + DName + " TEXT, " + PName + " TEXT, " + KEY_ITEM_QUANTITY + " TEXT, " + KEY_Total + " TEXT, " + KEY_Date + " TEXT);";
         database.execSQL(query);
        /* database = dbHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -172,7 +180,7 @@ public class DBManager {
         database.insert(Table_Name, null, cv);*/
         database.close();
     }
-public void additemsforbilling(String itemname,String itemrate,String item_quantity,String itemtotal){
+public void additemsforbilling(String itemname,String itemrate,String item_quantity,String itemtotal,String date){
     database = dbHelper.getWritableDatabase();
 
     ContentValues cv = new ContentValues();
@@ -180,6 +188,7 @@ public void additemsforbilling(String itemname,String itemrate,String item_quant
     cv.put("item_price", itemrate);
     cv.put("itemquantity",item_quantity);
     cv.put("itemtotal",itemtotal);
+    cv.put("dates",date);
     database.insertWithOnConflict("BILL",null,  cv,SQLiteDatabase.CONFLICT_REPLACE);
     database.close();
 
@@ -239,6 +248,122 @@ cv.put("item_name",itemname);
 
 
     }
+    public void updateitems(String tablename,String id,String itemname,String price,String quantity){
+        database = dbHelper.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("item_name", itemname);
+        cv.put("item_price", price);
+
+        cv.put("key_quantity",quantity);
+        database.update(tablename, cv, "itemid="+id, null);
+
+    }
+    public void updatecategory(String id,String catname){
+
+        database = dbHelper.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("subject", catname);
+
+
+
+        database.update(DatabaseHelper.TABLE_NAME, cv, "_id="+id, null);
+
+    }
+    public void CreateDynamicTables2(String Table_Name,String old_table_name)
+    {
+        String Table_Name2=Table_Name.replaceAll("\\s+","");
+        String CID="itemid";
+        String DName="item_name";
+        String PName="item_price";
+        String KEY_IMAGE="key_image";
+        String KEY_Quantity="key_quantity";
+
+        database = dbHelper.getWritableDatabase();
+        // database.execSQL("DROP TABLE IF EXISTS " + Table_Name);
+        String query = "CREATE TABLE IF NOT EXISTS " + Table_Name2 + "(" + CID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + DName + " TEXT, " + PName + " TEXT, " + KEY_IMAGE + " TEXT, " + KEY_Quantity + " TEXT);";
+        database.execSQL(query);
+        String query2="INSERT INTO "+ Table_Name2+" SELECT * FROM "+old_table_name ;
+        database.execSQL(query2);
+        database.execSQL("DROP TABLE IF EXISTS " + old_table_name);
+
+
+    }
+    public void CreateDynamicTablesmysales()
+    {
+        String BID="salesid";
+        String DName="item_name";
+        String PName="item_price";
+        String KEY_ITEM_QUANTITY="itemquantity";
+        String KEY_Total="itemtotal";
+        String KEY_Date="dates";
+
+        database = dbHelper.getWritableDatabase();
+        //  database.execSQL("DROP TABLE IF EXISTS " + "BILL");
+        String query = "CREATE TABLE IF NOT EXISTS " + "MYSALES"+ "(" + BID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + DName + " TEXT, " + PName + " TEXT, " + KEY_ITEM_QUANTITY + " TEXT, " + KEY_Total + " TEXT, " + KEY_Date + " TEXT);";
+        database.execSQL(query);
+        String query2="INSERT INTO MYSALES SELECT * FROM BILL " ;
+        database.execSQL(query2);
+        database.close();
+    }
+
+public List<Model_sales> getsalessearch(String datefrom, String dateto){
+    String KEY_Date="dates";
+    String TBL="MYSALES";
+    List<Model_sales> contactList = new ArrayList<Model_sales>();
+    // Select All Query
+/*
+    String query="SELECT item_name, item_price, itemquantity, itemtotal, dates FROM MYSALES WHERE  dates BETWEEN "+datefrom +" AND " +dateto+ " ORDER BY dates ASC";
+*/
+
+
+
+
+
+    SQLiteDatabase db = dbHelper.getWritableDatabase();
+    Cursor cursor = db.rawQuery("SELECT * FROM "+ TBL +
+            " WHERE " + KEY_Date +
+            " BETWEEN '" + datefrom + "' AND '" + dateto + "'", null);
+
+
+
+
+
+    //Cursor cursor = db.rawQuery(query, null);
+
+    // looping through all rows and adding to list
+    if (cursor.moveToFirst()) {
+        do {
+            Model_sales model_sales = new Model_sales();
+            model_sales.setSalesid(cursor.getString(0));
+            String a=cursor.getString(1);
+            Log.i("help",a);
+            model_sales.setItem(cursor.getString(1));
+            model_sales.setItem_price(cursor.getString(2));
+            model_sales.setQuantity(cursor.getString(3));
+            model_sales.setTotal_amount(cursor.getString(4));
+model_sales.setDate(cursor.getString(5));
+
+            // Adding contact to list
+            contactList.add(model_sales);
+        } while (cursor.moveToNext());
+    }
+
+    // return contact list
+    return contactList;
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
 
 
 }

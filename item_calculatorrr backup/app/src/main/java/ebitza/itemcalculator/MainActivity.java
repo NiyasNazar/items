@@ -1,10 +1,12 @@
 package ebitza.itemcalculator;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
@@ -15,16 +17,38 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.util.Calendar;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 String TAG="TAG";
+    String table_name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        int a= Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH);
+
+        Intent is=getIntent();
+     /*   if (getIntent().getExtras()!=null) {
+          table_name = is.getStringExtra("str");
+            Toast.makeText(getApplicationContext(),"tbl"+table_name,Toast.LENGTH_SHORT).show();
+            Bundle bundle=new Bundle();
+            bundle.putString("message", table_name);
+            myListFragment1.setArguments(bundle);
+
+        }*/
         isWriteStoragePermissionGranted();
         isReadStoragePermissionGranted();
         final ImageView imageView=(ImageView)findViewById(R.id.imageview);
         MyListFragment1  myListFragment1=new MyListFragment1();
+        if (getIntent().getExtras()!=null) {
+            table_name = is.getStringExtra("str");
+            Toast.makeText(getApplicationContext(),"tbl"+table_name,Toast.LENGTH_SHORT).show();
+            Bundle bundle=new Bundle();
+            bundle.putString("message", table_name);
+            myListFragment1.setArguments(bundle);
+
+        }
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment1,myListFragment1).commit();
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,6 +70,8 @@ String TAG="TAG";
                                 finish();
                                 break;
                             case R.id.three:
+                                Intent sales=new Intent(getApplicationContext(),Salesview_activity.class);
+                                startActivity(sales);
                                 break;
 
                         }
@@ -77,12 +103,7 @@ String TAG="TAG";
     public void onClick(View view) {
 
         }
-    @Override
-    public void onBackPressed() {
 
-
-        finish();
-    }
     public  boolean isReadStoragePermissionGranted() {
         if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -148,7 +169,25 @@ String TAG="TAG";
                 break;
         }
     }
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to exit?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        MainActivity.this.finish();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
 
+    }
 
 
 

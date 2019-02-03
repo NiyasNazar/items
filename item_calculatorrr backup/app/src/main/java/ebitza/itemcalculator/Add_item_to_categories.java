@@ -1,6 +1,7 @@
 package ebitza.itemcalculator;
 
 import android.annotation.TargetApi;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -8,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -32,7 +34,7 @@ public class Add_item_to_categories extends AppCompatActivity {
     private Bitmap bp;
     private byte[] photo;
     ImageView imv;
-
+  String tablename;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +46,7 @@ public class Add_item_to_categories extends AppCompatActivity {
         item_price = (EditText) findViewById(R.id.edittext_item_price);
         item_quantity=(EditText)findViewById(R.id.edittext_item_quantity);
         imv=(ImageView)findViewById(R.id.imv);
-        final String tablename = getIntent().getStringExtra("strtext");
+       tablename = getIntent().getStringExtra("strtext");
         dbManager = new DBManager(this);
         dbManager.open();
         databaseHelper = new DatabaseHelper(this);
@@ -56,16 +58,28 @@ public class Add_item_to_categories extends AppCompatActivity {
                 String Itemsname = item_name.getText().toString();
                 String Itemprice = item_price.getText().toString();
                 String Itemquantity=item_quantity.getText().toString();
-                if (photo==null){
-
-                }else{
+                if (bp!=null){
                     photo=profileImage(bp);
                 }
 
-                dbManager.additemstocategory(tablename, Itemsname, Itemprice,photo,Itemquantity);
-                item_name.setText("");
-                item_price.setText("");
-                item_quantity.setText("");
+                if (photo==null){
+                    dbManager.additemstocategory(tablename, Itemsname, Itemprice,null,Itemquantity);
+                    item_name.setText("");
+                    item_price.setText("");
+                    item_quantity.setText("");
+                    imv.setImageBitmap(null);
+
+                }else{
+
+                    dbManager.additemstocategory(tablename, Itemsname, Itemprice,photo,Itemquantity);
+                    item_name.setText("");
+                    item_price.setText("");
+                    item_quantity.setText("");
+                    imv.setImageBitmap(null);
+                    chooseimageforproduct.setVisibility(View.VISIBLE);
+                }
+
+
             }
         });
         chooseimageforproduct.setOnClickListener(new View.OnClickListener() {
@@ -142,5 +156,29 @@ public class Add_item_to_categories extends AppCompatActivity {
         return bos.toByteArray();
 
     }
+    @Override
+    public void onBackPressed() {
+        Intent is=new Intent(getApplicationContext(),MainActivity.class);
+        is.putExtra("str",tablename);
+        startActivity(is);
+        finish();
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 

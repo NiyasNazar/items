@@ -10,6 +10,7 @@ android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
     tools:context=".Final_bill_view">
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/error_layout"
        android:layout_marginTop="45dp"
         android:orientation="vertical"
@@ -45,12 +46,13 @@ android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="42dp" />
 
+
     </LinearLayout>
 
 
     <RelativeLayout
         android:id="@+id/mainlayout"
-        android:visibility="gone"
+
 
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -76,6 +78,15 @@ android:gravity="center"
             android:layout_marginLeft="5dp"
             android:textColor="#FFFFFF"
             android:background="@drawable/login_btn"
+            android:layout_weight="1"
+            android:text="Print"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Button
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/login_btn"
             android:id="@+id/btn_share_bill"
             android:layout_weight="1"
             android:text="Share"
@@ -87,7 +98,7 @@ android:gravity="center"
             android:textColor="#FFFFFF"
             android:background="@drawable/login_btn"
             android:layout_weight="1"
-            android:text="Print"
+            android:text="Save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -215,32 +226,67 @@ android:textStyle="bold"
             android:layout_height="wrap_content">
             <TextView
                 android:textColor="#FFFFFF"
-                android:text="Enter denomination"
-                android:layout_width="wrap_content"
+                android:text="Cash Recieved"
+                android:textAllCaps="true"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
                 android:layout_height="wrap_content" />
             <EditText
+                android:padding="2dp"
+                android:layout_weight="2"
                 android:id="@+id/ed_enter_balance"
                 android:layout_marginLeft="5dp"
                 android:inputType="number"
                 android:background="@drawable/ed_search_bg"
-                android:layout_width="70dp"
+                android:layout_width="match_parent"
                 android:layout_height="35dp" />
-            <Button
 
-                android:id="@+id/btn_balance"
-android:layout_marginLeft="2dp"
-                android:textSize="12sp"
-                android:text="Balance"
-                android:layout_width="80dp"
-                android:layout_height="35dp" />
         </LinearLayout>
-        <TextView
-            android:id="@+id/tv_balance"
-            android:textColor="#FFFFFF"
-            android:layout_gravity="center"
+        <LinearLayout
+            android:layout_marginTop="3dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_weight="1"
+                android:textColor="#FFFFFF"
+                android:text="BILL AMOUNT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/totalz"
+                android:layout_marginLeft="5dp"
+               android:text="1500"
+                android:gravity="center"
+                android:textColor="#FFFFFF"
+                android:layout_width="match_parent"
+                android:layout_weight="2"
+                android:layout_height="35dp" />
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+android:layout_marginBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+
+                android:layout_weight="1"
+                android:textColor="#FFFFFF"
+                android:text="BALANCE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:gravity="center"
+                android:layout_weight="2"
+                android:id="@+id/tv_balance"
+                android:textColor="#FFFFFF"
+                android:layout_gravity="center"
+android:text="0.00"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
     </LinearLayout>
 </RelativeLayout>
 </RelativeLayout>

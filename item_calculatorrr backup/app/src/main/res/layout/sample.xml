@@ -45,35 +45,37 @@
 
     </LinearLayout>
     <LinearLayout
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="3dp"
         android:layout_marginLeft="35dp"
         android:layout_width="wrap_content"
         android:orientation="vertical"
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <ImageView
-                android:id="@+id/imvminus"
+                android:id="@+id/imvplus"
+android:src="@drawable/ic_action_addq"
+               android:background="@drawable/ed_search_bg"
 
-                android:background="@drawable/ic_action_minus"
-
-                android:layout_width="20dp"
+                android:layout_width="30dp"
                 android:layout_height="20dp" />
 
             <TextView
+                android:layout_marginTop="3dp"
                 android:id="@+id/tvqua"
         android:gravity="center"
                 android:background="@drawable/ed_search_bg"
 android:text="0"
                 android:layout_width="30dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="35dp" />
             <ImageView
-                android:id="@+id/imvplus"
-                android:background="@drawable/ic_action_add"
-                android:layout_width="20dp"
+                android:layout_marginTop="3dp"
+android:background="@drawable/ed_search_bg"                android:id="@+id/imvminus"
+android:src="@drawable/ic_action_removeq"
+                android:layout_width="30dp"
                 android:layout_height="20dp" />
 
 
@@ -84,9 +86,10 @@ android:text="0"
             android:layout_marginTop="10dp"
             android:background="@drawable/login_btn"
             android:text="Add"
+
             android:textSize="12sp"
             android:textColor="#FFF"
-            android:layout_width="50dp"
+            android:layout_width="40dp"
             android:layout_height="25dp" />
 
 

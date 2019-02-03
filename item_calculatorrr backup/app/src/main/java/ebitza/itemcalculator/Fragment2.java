@@ -41,8 +41,9 @@ public class Fragment2 extends Fragment {
         databaseHelper=new DatabaseHelper(getActivity());
         db=databaseHelper.getReadableDatabase();
         List<Model_category_item> datalist=dbManager.getAllitems(strtext);
-        Adapter_for_item_list adapter=new Adapter_for_item_list(datalist,getActivity());
+        Adapter_for_item_list adapter=new Adapter_for_item_list(datalist,getActivity(),strtext);
         RCVcaterory_item.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
 
 
 
@@ -59,6 +60,7 @@ public class Fragment2 extends Fragment {
                 Intent intent=new Intent(getActivity(),Add_item_to_categories.class);
                 intent.putExtra("strtext",strtext);
                 startActivity(intent);
+                getActivity().finish();
 
             }
         });

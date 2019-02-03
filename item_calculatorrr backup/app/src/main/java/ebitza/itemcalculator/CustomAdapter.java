@@ -62,7 +62,7 @@ public class CustomAdapter extends BaseAdapter {
 
         holder.name.setText(Name.get(position).getCategory_name());
         Log.i("names",Name.get(position).getCategory_name());
-        Toast.makeText(mContext,"dbtoast"+Name.get(position).getCategory_name(),Toast.LENGTH_SHORT).show();
+
 
         return convertView;
     }

@@ -18,6 +18,8 @@ import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -84,9 +86,34 @@ public class Final_bill_view extends AppCompatActivity {
        // layout_to_image=new Layout_to_Image(Final_bill_view.this,relativeLayout);
 
 
-clickbalance=(Button)findViewById(R.id.btn_balance);
 Viewbalance=(TextView) findViewById(R.id.tv_balance);
 Enter_balance=(EditText)findViewById(R.id.ed_enter_balance);
+Enter_balance.addTextChangedListener(new TextWatcher() {
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        int a= Integer.parseInt(s.toString());
+        int bill=total-a;
+        if (bill<0){
+
+
+            Viewbalance.setText(""+bill);
+        }else{
+            Viewbalance.setText(" "+bill);
+
+        }
+
+    }
+});
 
 
         final ListView recordsView = (ListView) findViewById(R.id.records_view);
@@ -111,25 +138,13 @@ for (int i=0;i<datalist.size();i++){
 
 }
 recordsView.setAdapter(bill_adapter);
+        TextView totals=(TextView) findViewById(R.id.totalz);
 
         tv.setText(""+total);
+        totals.setText(""+total);
 
 
-clickbalance.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-      int a= Integer.parseInt(Enter_balance.getText().toString());
-      int bill=total-a;
-      if (bill<0){
 
-
-      Viewbalance.setText("Pay customer  "+bill);
-      }else{
-          Viewbalance.setText("Customer Pay  "+bill);
-
-      }
-    }
-});
 Button sharebill=(Button)findViewById(R.id.btn_share_bill);
 sharebill.setOnClickListener(new View.OnClickListener() {
     @Override
@@ -143,6 +158,7 @@ sharebill.setOnClickListener(new View.OnClickListener() {
 
 pd.dismiss();
         String pack="com.whatsapp";
+        dbManager.CreateDynamicTablesmysales();
 dbManager.deletetable();
         String bitmapPath = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap,"title", null);
         Uri bitmapUri = Uri.parse(bitmapPath);

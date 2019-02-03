@@ -12,6 +12,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Salesview_activity"></activity>
+        <activity android:name=".Search_views.Search_test"></activity>
+
+        <provider
+            android:name="br.com.mauker.materialsearchview.db.HistoryProvider"
+            android:authorities="br.com.mauker.materialsearchview.searchhistorydatabase"
+            android:exported="false"
+            android:protectionLevel="signature"
+            android:syncable="true" />
         <provider
             android:name=".Utils.GenericFileProvider"
             android:authorities="${applicationId}.provider"
@@ -25,18 +34,27 @@
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan">
+           <!-- <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+        <activity android:name=".Addcategory" />
+        <activity android:name=".Add_item_to_categories" />
+        <activity android:name=".Final_bill_view" />
+        <activity android:name=".Remove_category" />
+        <activity android:name=".Test" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Addcategory" />
-        <activity android:name=".Add_item_to_categories" />
-        <activity android:name=".Final_bill_view" />
-        <activity android:name=".Remove_category" />
-        <activity android:name=".Test" />
-        <activity android:name=".Remove_items"></activity>
+
+
+
+        <activity android:name=".Remove_items" />
     </application>
 
 </manifest>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_above="@+id/lll"
+    android:paddingLeft="1dp"
+    android:paddingRight="1dp">
+
+    <ListView android:id="@+id/lista"
+android:listSelector="@drawable/fragment_listselector"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:drawSelectorOnTop="false"/>
+
+
+
+    <TextView android:id="@id/android:empty"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="No data"/>
+
+</LinearLayout>
+    <LinearLayout
+
+        android:id="@+id/lll"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <TextView
+        android:typeface="sans"
+        android:layout_marginLeft="10dp"
+android:layout_marginRight="10dp"
+        android:textColor="#02D09D"
+        android:text="ADD CATEGORY"
+        android:textSize="18px"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <ImageView
+      android:tint="#000"
+        android:layout_marginTop="10dp"
+        android:text="Add"
+        android:layout_gravity="center"
+        android:id="@+id/addcat"
+android:src="@drawable/ic_action_add_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp" />
+        <LinearLayout
+            android:background="#02D09D"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <ImageView
+
+            android:backgroundTint="#FFFFFF"
+
+            android:id="@+id/back_button"
+            android:background="@drawable/ic_action_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
