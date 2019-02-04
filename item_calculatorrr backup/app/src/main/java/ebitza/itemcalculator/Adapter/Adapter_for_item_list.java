@@ -78,7 +78,7 @@ public class Adapter_for_item_list extends RecyclerView.Adapter<Adapter_for_item
             ll.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    dbManager.CreateDynamicTablesforbill();
+
                     int position=getAdapterPosition();
 
                     final String itemid=itemList.get(position).getItem_id();
@@ -136,6 +136,13 @@ if (imgs==null){
     imv_item_image.setImageBitmap(bmp);
 }
 
+
+                    AlertDialog.Builder alert = new AlertDialog.Builder(mcontext);
+                    alert.setTitle("");
+                    alert.setView(alertLayout);
+                    alert.setCancelable(true);
+                    final AlertDialog dialog = alert.create();
+                    dialog.show();
                     Button alertdialogconfir=alertLayout.findViewById(R.id.btn_alert_dialog_confirm);
                     alertdialogconfir.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -148,30 +155,33 @@ if (imgs==null){
                             String pp=tvItemprice.getText().toString();
                             a=selected_quantity.getText().toString();
 
-if (a.equals("0")){
-    Toast.makeText(mcontext,"Quantity must be greater than zero",Toast.LENGTH_SHORT).show();
-}else {
-    int q=Integer.parseInt(a);
-    int p=Integer.parseInt(pp);
-    int tot=p*q;
-    String total=String.valueOf(tot);
+                            if (a.equals("0")){
+                                Toast.makeText(mcontext,"Quantity must be greater than zero",Toast.LENGTH_SHORT).show();
+                            }else {
+                                int q=Integer.parseInt(a);
+                                int p=Integer.parseInt(pp);
+                                int tot=p*q;
+                                String total=String.valueOf(tot);
 
 
 
 
-    dbManager.additemsforbilling(itemname,itemprice,a,total,date);
-}
+                                dbManager.additemsforbilling(itemname,itemprice,a,total,date);
+                                dialog.dismiss();
+                            }
 
-                         //   dbManager.updatebilltable(itemid,a,total,itemname,itemprice);
+                            //   dbManager.updatebilltable(itemid,a,total,itemname,itemprice);
+
 
                         }
                     });
-                    AlertDialog.Builder alert = new AlertDialog.Builder(mcontext);
-                    alert.setTitle("");
-                    alert.setView(alertLayout);
-                    alert.setCancelable(true);
-                    AlertDialog dialog = alert.create();
-                    dialog.show();
+
+
+
+
+
+
+
                 }
             });
 

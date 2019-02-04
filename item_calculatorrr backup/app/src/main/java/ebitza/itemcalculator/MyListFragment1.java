@@ -87,23 +87,44 @@ String datas;
        /* final ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),R.layout.listview_item_category, labels);
       lv.  setAdapter(dataAdapter);*/
        lv.setAdapter(dataAdapter);
+        if (getArguments()!=null) {
+            datas = getArguments().getString("message1");
+          //  Loadfirstposition(datas);
 
-        if (!dataAdapter.isEmpty()) {
+           // Log.i("String",datas);
+        }
+        if (datas!=null){
+            Loadfirstposition(datas);
+
+
+            Log.i("String","emptynot");
+        }else if(!dataAdapter.isEmpty()){
+            Log.i("String","loadeddef");
             String value = labels.get(0).getCategory_name();
-            Loadfirstposition(value);
+           Loadfirstposition(value);
             lv.setItemChecked(defaultPositon, true);
         }
 
 
 
-        if(bundle !=null){
+
+        if (!dataAdapter.isEmpty()) {
+          //  Log.i("String","loadeddef");
+            String value = labels.get(0).getCategory_name();
+         //   Loadfirstposition(value);
+          //  lv.setItemChecked(defaultPositon, true);
+        }
+
+
+
+       /* if(bundle !=null){
             datas=bundle.getString("message");
            // Log.i("test",datas);
 
 
 
                Loadfirstposition(datas);
-            }
+            }*/
 
 
 

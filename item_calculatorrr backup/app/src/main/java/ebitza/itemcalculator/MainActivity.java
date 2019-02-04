@@ -23,17 +23,56 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import ebitza.itemcalculator.Db_Helper.DBManager;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 String TAG="TAG";
     String table_name;
     SharedPreferences prefs = null;
+    SharedPreferences prefs1 = null;
     Calendar alarmcalendar;
     String current_time;
+    String status;
+DBManager dbManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         prefs = getSharedPreferences("myAppName", MODE_PRIVATE);
+        prefs1 = getSharedPreferences("warning", MODE_PRIVATE);
         setContentView(R.layout.activity_main);
+
+       // prefs1.edit().putString("status","Yes").apply();
+
+        status=prefs1.getString("status",null);
+
+Toast.makeText(getApplicationContext(),"sts"+status,Toast.LENGTH_SHORT).show();
+
+        dbManager=new DBManager(getApplicationContext());
+        isWriteStoragePermissionGranted();
+        Intent is=getIntent();
+        if (getIntent().getExtras()!=null) {
+            table_name = is.getStringExtra("str");
+            Toast.makeText(getApplicationContext(),"tbl"+table_name,Toast.LENGTH_SHORT).show();
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       // isReadStoragePermissionGranted();
+
         int a= Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH);
         SimpleDateFormat formatter = new SimpleDateFormat(" yyyy-MM-dd");
         Date date = new Date();
@@ -46,39 +85,71 @@ String TAG="TAG";
         Date date2 = new Date();
         /*System.out.println(formatter.format(date));*/
 
-        Log.i("times",formatter.format(date2));
+        Log.i("times",current_time);
 String setdate=formatter2.format(date2);
 String notidate=setdate+"-"+a;
+        String notidate1=setdate+"-"+"01";
+        String notidate2=setdate+"-"+"02";
+        String notidate3=setdate+"-"+"03";
 
-        Log.i("timessss",notidate);
+        Log.i("timessssssaa",notidate1);
         Toast.makeText(getApplicationContext(),"tt"+notidate,Toast.LENGTH_SHORT).show();
 
 
         String launchdate=prefs.getString("launch",null);
         // Log.i("timess",launchdate);
-        if (current_time.equals(notidate)){
-            final MediaPlayer mp = MediaPlayer.create(MainActivity.this, R.raw.testss);
-            mp.start();
-            prefs.edit().putString("launch",current_time).apply();
-            Log.i("timesss",prefs.getString("launch",null));
-            AlertDialog.Builder b = new AlertDialog.Builder(MainActivity.this);
-            b.setMessage("test6");
-            b.setCancelable(false);
-            b.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
+
+       /// if (status.equals("Yes")) {
+            if (!current_time.equals(launchdate)) {
+                if (current_time.equals(notidate)) {
+
+
+                    Log.i("timesssa", "notificationdate");
+                    reminder();
+
+                /*final MediaPlayer mp = MediaPlayer.create(MainActivity.this, R.raw.testss);
+                mp.start();
+                prefs.edit().putString("launch",current_time).apply();
+              //  Log.i("timesss",prefs.getString("launch",null));
+                AlertDialog.Builder b = new AlertDialog.Builder(MainActivity.this);
+                b.setMessage("test6");
+                b.setCancelable(false);
+                b.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                b.setTitle("hi");
+                AlertDialog ad = b.create();
+                ad.show();*/
+
+
+                } else if (current_time.equals(notidate1)) {
+                    reminder();
+                    Log.i("timesssa", "notificationdate1");
+
+                } else if (current_time.equals(notidate2)) {
+                    reminder();
+                    Log.i("timesssa", "notificationdate2");
+
+                } else if (current_time.equals(notidate3)) {
+                    reminder();
+                    Log.i("timesssa", "notificationdate3");
+
                 }
-            });
-            b.setTitle("hi");
-            AlertDialog ad = b.create();
-            ad.show();
-            prefs.edit().putString("lauch",current_time).apply();
-        }else{
 
 
+                prefs.edit().putString("launch", current_time).apply();
+                // notidate=current_time;
 
-        }
-        Intent is=getIntent();
+            } else {
+
+
+            }
+       // }else{
+
+       // }
+
      /*   if (getIntent().getExtras()!=null) {
           table_name = is.getStringExtra("str");
             Toast.makeText(getApplicationContext(),"tbl"+table_name,Toast.LENGTH_SHORT).show();
@@ -87,18 +158,20 @@ String notidate=setdate+"-"+a;
             myListFragment1.setArguments(bundle);
 
         }*/
-        isWriteStoragePermissionGranted();
-        isReadStoragePermissionGranted();
+        dbManager.open();
+        dbManager.CreateDynamicTablesforbill();
+      dbManager.CreateDynamicTablesWarning();
+      //  dbManager.insertstatus();
+
         final ImageView imageView=(ImageView)findViewById(R.id.imageview);
         MyListFragment1  myListFragment1=new MyListFragment1();
-        if (getIntent().getExtras()!=null) {
-            table_name = is.getStringExtra("str");
-            Toast.makeText(getApplicationContext(),"tbl"+table_name,Toast.LENGTH_SHORT).show();
-            Bundle bundle=new Bundle();
-            bundle.putString("message", table_name);
+        if (table_name!=null) {
+            Bundle bundle = new Bundle();
+            Log.i("String", "fromback");
+            bundle.putString("message1", table_name);
             myListFragment1.setArguments(bundle);
-
         }
+
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment1,myListFragment1).commit();
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,6 +197,13 @@ String notidate=setdate+"-"+a;
                                 startActivity(sales);
                                 break;
 
+                            case R.id.four:
+                                Intent settings=new Intent(getApplicationContext(),Settings.class);
+                                startActivity(settings);
+                                break;
+
+
+
                         }
 
                         return true;
@@ -144,6 +224,7 @@ String notidate=setdate+"-"+a;
             public void onClick(View v) {
                 Intent is=new Intent(getApplicationContext(),Final_bill_view.class);
                 startActivity(is);
+                finish();
 
             }
         });
@@ -227,6 +308,7 @@ String notidate=setdate+"-"+a;
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         MainActivity.this.finish();
+                        getIntent().removeExtra("message");
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -239,7 +321,27 @@ String notidate=setdate+"-"+a;
 
     }
 
+public void reminder(){
+    final MediaPlayer mp = MediaPlayer.create(MainActivity.this, R.raw.testss);
+    mp.start();
+    prefs.edit().putString("launch",current_time).apply();
+    //  Log.i("timesss",prefs.getString("launch",null));
+    AlertDialog.Builder b = new AlertDialog.Builder(MainActivity.this);
+    b.setMessage("Backup up your data");
+    b.setCancelable(false);
+    b.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int which) {
+            dialog.dismiss();
+        }
+    });
+    b.setTitle("Backup Warning");
+    AlertDialog ad = b.create();
+    ad.show();
 
+
+
+
+}
 
 
 }

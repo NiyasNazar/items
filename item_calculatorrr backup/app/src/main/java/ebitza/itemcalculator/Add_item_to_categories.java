@@ -35,7 +35,7 @@ public class Add_item_to_categories extends AppCompatActivity {
     private byte[] photo;
     ImageView imv;
   String tablename;
-
+    Uri choosenImage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,23 +60,43 @@ public class Add_item_to_categories extends AppCompatActivity {
                 String Itemquantity=item_quantity.getText().toString();
                 if (bp!=null){
                     photo=profileImage(bp);
-                }
-
-                if (photo==null){
-                    dbManager.additemstocategory(tablename, Itemsname, Itemprice,null,Itemquantity);
-                    item_name.setText("");
-                    item_price.setText("");
-                    item_quantity.setText("");
-                    imv.setImageBitmap(null);
-
-                }else{
 
                     dbManager.additemstocategory(tablename, Itemsname, Itemprice,photo,Itemquantity);
                     item_name.setText("");
                     item_price.setText("");
                     item_quantity.setText("");
                     imv.setImageBitmap(null);
+                    imv.setVisibility(View.GONE);
                     chooseimageforproduct.setVisibility(View.VISIBLE);
+                    bp=null;
+                    choosenImage=null;
+
+
+
+                }else{
+                    dbManager.additemstocategory(tablename, Itemsname, Itemprice,null,Itemquantity);
+                    item_name.setText("");
+                    item_price.setText("");
+                    item_quantity.setText("");
+                    imv.setImageBitmap(null);
+
+
+                }
+
+                if (photo==null){
+                   /* dbManager.additemstocategory(tablename, Itemsname, Itemprice,null,Itemquantity);
+                    item_name.setText("");
+                    item_price.setText("");
+                    item_quantity.setText("");
+                    imv.setImageBitmap(null);*/
+
+                }else{
+
+
+
+
+
+
                 }
 
 
@@ -95,6 +115,8 @@ public class Add_item_to_categories extends AppCompatActivity {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, 2);
+        bp=null;
+        choosenImage=null;
     }
 
     @Override
@@ -102,7 +124,7 @@ public class Add_item_to_categories extends AppCompatActivity {
         switch (requestCode) {
             case 2:
                 if (resultCode == RESULT_OK) {
-                    Uri choosenImage = data.getData();
+                  choosenImage = data.getData();
 
                     if (choosenImage != null) {
 

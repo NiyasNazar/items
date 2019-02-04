@@ -55,10 +55,10 @@ public class Final_bill_view extends AppCompatActivity {
     Layout_to_Image layout_to_image;
     DatabaseHelper databaseHelper;
     Bitmap bitmap;
-    LinearLayout linearLayout,eroorLayout;
+    LinearLayout linearLayout, eroorLayout;
     RelativeLayout mainLa;
     ImageView imss;
-    int total=0;
+    int total = 0;
     Button clickbalance;
     EditText Enter_balance;
     TextView Viewbalance;
@@ -68,114 +68,112 @@ public class Final_bill_view extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_final_bill_view);
         linearLayout = (LinearLayout) findViewById(R.id.lltbl);
-        TextView tv=(TextView)findViewById(R.id.tvtotalprice);
+        TextView tv = (TextView) findViewById(R.id.tvtotalprice);
         final ProgressDialog pd = new ProgressDialog(Final_bill_view.this);
         pd.setMessage("Processing ...");
-        relativeLayout=(RelativeLayout)findViewById(R.id.containers);
-        mainLa=(RelativeLayout)findViewById(R.id.mainlayout);
-        eroorLayout=(LinearLayout) findViewById(R.id.error_layout);
-        Button go_back=(Button)findViewById(R.id.btn_go_back);
+        relativeLayout = (RelativeLayout) findViewById(R.id.containers);
+        mainLa = (RelativeLayout) findViewById(R.id.mainlayout);
+        eroorLayout = (LinearLayout) findViewById(R.id.error_layout);
+        Button go_back = (Button) findViewById(R.id.btn_go_back);
         go_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent is=new Intent(getApplicationContext(),MainActivity.class);
+                Intent is = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(is);
                 finish();
             }
         });
-       // layout_to_image=new Layout_to_Image(Final_bill_view.this,relativeLayout);
+        // layout_to_image=new Layout_to_Image(Final_bill_view.this,relativeLayout);
 
 
-Viewbalance=(TextView) findViewById(R.id.tv_balance);
-Enter_balance=(EditText)findViewById(R.id.ed_enter_balance);
-Enter_balance.addTextChangedListener(new TextWatcher() {
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        Viewbalance = (TextView) findViewById(R.id.tv_balance);
+        Enter_balance = (EditText) findViewById(R.id.ed_enter_balance);
+        Enter_balance.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-    }
+            }
 
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-    }
+            }
 
-    @Override
-    public void afterTextChanged(Editable s) {
-        int a= Integer.parseInt(s.toString());
-        int bill=total-a;
-        if (bill<0){
+            @Override
+            public void afterTextChanged(Editable s) {
+                int a = Integer.parseInt(s.toString());
+                int bill = total - a;
+                if (bill < 0) {
 
 
-            Viewbalance.setText(""+bill);
-        }else{
-            Viewbalance.setText(" "+bill);
+                    Viewbalance.setText("" + bill);
+                } else {
+                    Viewbalance.setText(" " + bill);
 
-        }
+                }
 
-    }
-});
+            }
+        });
 
 
         final ListView recordsView = (ListView) findViewById(R.id.records_view);
-        databaseHelper=new DatabaseHelper(getApplicationContext());
-        dbManager=new DBManager(getApplicationContext());
+        databaseHelper = new DatabaseHelper(getApplicationContext());
+        dbManager = new DBManager(getApplicationContext());
         dbManager.open();
-        List<Model_bill>datalist=dbManager.get_generate_bill();
-        if (datalist.size()==0){
-        eroorLayout.setVisibility(View.VISIBLE);
-        mainLa.setVisibility(View.GONE);
-        }
-        else{
+        List<Model_bill> datalist = dbManager.get_generate_bill();
+        if (datalist.size() == 0) {
+            eroorLayout.setVisibility(View.VISIBLE);
+            mainLa.setVisibility(View.GONE);
+        } else {
             mainLa.setVisibility(View.VISIBLE);
             eroorLayout.setVisibility(View.GONE);
 
         }
-        Bill_adapter bill_adapter=new Bill_adapter(getApplicationContext(),datalist);
-for (int i=0;i<datalist.size();i++){
+        Bill_adapter bill_adapter = new Bill_adapter(getApplicationContext(), datalist);
+        for (int i = 0; i < datalist.size(); i++) {
 
-    int totz= Integer.parseInt(datalist.get(i).getTotal_amount());
-     total += totz;
-
-}
-recordsView.setAdapter(bill_adapter);
-        TextView totals=(TextView) findViewById(R.id.totalz);
-
-        tv.setText(""+total);
-        totals.setText(""+total);
-
-
-
-Button sharebill=(Button)findViewById(R.id.btn_share_bill);
-sharebill.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-
-        pd.show();
-        linearLayout.setVisibility(View.GONE);
-        bitmap = ScreenshotUtils.getScreenShot(relativeLayout);
-
-
-
-pd.dismiss();
-        String pack="com.whatsapp";
-        dbManager.CreateDynamicTablesmysales();
-dbManager.deletetable();
-        String bitmapPath = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap,"title", null);
-        Uri bitmapUri = Uri.parse(bitmapPath);
-        Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
-        whatsappIntent.setType("image/*");
-        whatsappIntent.setPackage("com.whatsapp");
-        whatsappIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-      //  whatsappIntent.putExtra(Intent.EXTRA_TEXT, "The text you wanted to share");
-        whatsappIntent.putExtra(Intent.EXTRA_STREAM, bitmapUri );
-        try {
-            startActivity(whatsappIntent);
-            finish();
-        } catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(getApplicationContext(), "App not Installed"+ex, Toast.LENGTH_SHORT).show();
+            int totz = Integer.parseInt(datalist.get(i).getTotal_amount());
+            total += totz;
 
         }
-   //  onClickApp(pack,bitmap);
+        recordsView.setAdapter(bill_adapter);
+        TextView totals = (TextView) findViewById(R.id.totalz);
+
+        tv.setText("" + total);
+        totals.setText("" + total);
+
+
+        Button sharebill = (Button) findViewById(R.id.btn_share_bill);
+        sharebill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                pd.show();
+                linearLayout.setVisibility(View.GONE);
+                bitmap = ScreenshotUtils.getScreenShot(relativeLayout);
+
+
+                pd.dismiss();
+                String pack = "com.whatsapp";
+                dbManager.CreateDynamicTablesmysales();
+                dbManager.deletetable();
+                String bitmapPath = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "title", null);
+                Uri bitmapUri = Uri.parse(bitmapPath);
+                Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
+                whatsappIntent.setType("image/*");
+                whatsappIntent.setPackage("com.whatsapp");
+                whatsappIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                //  whatsappIntent.putExtra(Intent.EXTRA_TEXT, "The text you wanted to share");
+                whatsappIntent.putExtra(Intent.EXTRA_STREAM, bitmapUri);
+                try {
+                    startActivityForResult(whatsappIntent, 0);
+                    //finish();
+
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(getApplicationContext(), "App not Installed" + ex, Toast.LENGTH_SHORT).show();
+
+                }
+                //  onClickApp(pack,bitmap);
 
 
 
@@ -192,39 +190,49 @@ dbManager.deletetable();
             Toast.makeText(getApplicationContext(),"Whatsapp have not been installed.",Toast.LENGTH_SHORT).show();
         }*/
 
-    }
-});
+            }
+        });
     }
 
     private void onClickApp(String pack, Bitmap bitmap) {
-    PackageManager pm = getPackageManager();
-    try {
+        PackageManager pm = getPackageManager();
+        try {
 
 
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
 
 
        /* String path = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "Title", null);
         Uri imageUri = Uri.parse(path);*/
 
-        @SuppressWarnings("unused")
-        PackageInfo info = pm.getPackageInfo(pack, PackageManager.GET_META_DATA);
+            @SuppressWarnings("unused")
+            PackageInfo info = pm.getPackageInfo(pack, PackageManager.GET_META_DATA);
 
-        Intent waIntent = new Intent(Intent.ACTION_SEND);
-        waIntent.setType("text/plain");
-        waIntent.setPackage(pack);
-      //  waIntent.setComponent(new ComponentName("com.whatsapp", "com.whatsapp.Conversation"));
-       // waIntent.setDataAndType(contentUri, getContentResolver().getType(contentUri));
-    //  waIntent.putExtra(android.content.Intent.EXTRA_STREAM, contentUri);
-        waIntent.putExtra(Intent.EXTRA_TEXT, pack);
-        waIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-startActivity(Intent.createChooser(waIntent, "Share with"));
-    } catch (Exception e) {
-        Log.e("Error on sharing", e + " ");
-        Toast.makeText(getApplicationContext(), "App not Installed"+e, Toast.LENGTH_SHORT).show();
+            Intent waIntent = new Intent(Intent.ACTION_SEND);
+            waIntent.setType("text/plain");
+            waIntent.setPackage(pack);
+            //  waIntent.setComponent(new ComponentName("com.whatsapp", "com.whatsapp.Conversation"));
+            // waIntent.setDataAndType(contentUri, getContentResolver().getType(contentUri));
+            //  waIntent.putExtra(android.content.Intent.EXTRA_STREAM, contentUri);
+            waIntent.putExtra(Intent.EXTRA_TEXT, pack);
+            waIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            startActivity(Intent.createChooser(waIntent, "Share with"));
+        } catch (Exception e) {
+            Log.e("Error on sharing", e + " ");
+            Toast.makeText(getApplicationContext(), "App not Installed" + e, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 0) {
+            Intent is = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(is);
+            finish();
+        }
+
+
     }
 }
 
 
-}

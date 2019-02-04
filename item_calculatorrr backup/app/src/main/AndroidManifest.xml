@@ -12,8 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Salesview_activity"></activity>
-        <activity android:name=".Search_views.Search_test"></activity>
+        <activity android:name=".Salesview_activity" />
+        <activity android:name=".Search_views.Search_test" />
 
         <provider
             android:name="br.com.mauker.materialsearchview.db.HistoryProvider"
@@ -34,7 +34,7 @@
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan">
-  <intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -45,11 +45,8 @@
         <activity android:name=".Final_bill_view" />
         <activity android:name=".Remove_category" />
         <activity android:name=".Test" />
-
-
-
-
         <activity android:name=".Remove_items" />
+        <activity android:name=".Settings"></activity>
     </application>
 
 </manifest>

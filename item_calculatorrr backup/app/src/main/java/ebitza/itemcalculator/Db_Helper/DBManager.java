@@ -41,6 +41,7 @@ public class DBManager {
         database = dbHelper.getWritableDatabase();
         ContentValues contentValue = new ContentValues();
         contentValue.put(DatabaseHelper.SUBJECT, name);
+        contentValue.put(DatabaseHelper.SUBJECT, name);
 
         database.insert(DatabaseHelper.TABLE_NAME, null, contentValue);
         String name2=name.replaceAll("\\s+","");
@@ -362,6 +363,54 @@ model_sales.setDate(cursor.getString(5));
 
 
 }
+    public void CreateDynamicTablesWarning()
+    {
+        String BID="Statusid";
+        String DName="Status";
+
+        database = dbHelper.getWritableDatabase();
+        //  database.execSQL("DROP TABLE IF EXISTS " + "BILL");
+        String query = "CREATE TABLE IF NOT EXISTS " + "WARNING"+ "(" + BID + " INTEGER PRIMARY KEY AUTOINCREMENT DEFAULT 0, " + DName + " INTEGER DEFAULT 1);";
+        database.execSQL(query);
+       /* database = dbHelper.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(CID, Contact_ID);
+        cv.put(DName, Display_Name);
+        database.insert(Table_Name, null, cv);*/
+        database.close();
+    }
+
+
+    public void insertstatus(){
+        database = dbHelper.getWritableDatabase();
+
+        ContentValues cv = new ContentValues();
+        cv.put("Status", "Yes");
+
+        database.insertWithOnConflict("WARNING",null,  cv,SQLiteDatabase.CONFLICT_REPLACE);
+        database.close();
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

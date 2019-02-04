@@ -11,5 +11,8 @@
     <item
         android:id="@+id/three"
         android:title="Sales"/>
+    <item
+        android:id="@+id/four"
+        android:title="Settings"/>
 
 </menu>

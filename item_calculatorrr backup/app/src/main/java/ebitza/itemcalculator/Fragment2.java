@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,10 +29,13 @@ public class Fragment2 extends Fragment {
     private SimpleCursorAdapter adapter;
     SQLiteDatabase db;
     DatabaseHelper databaseHelper;
+    String strtext="";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO Auto-generated method stub
-        final String strtext=getArguments().getString("message");
+        if (getArguments()!=null) {
+strtext = getArguments().getString("message");
+        }
 
         View view=inflater.inflate(R.layout.fragment2, container, false);
         RecyclerView RCVcaterory_item=(RecyclerView)view.findViewById(R.id.recyclerview_category);
@@ -40,10 +44,13 @@ public class Fragment2 extends Fragment {
         dbManager.open();
         databaseHelper=new DatabaseHelper(getActivity());
         db=databaseHelper.getReadableDatabase();
-        List<Model_category_item> datalist=dbManager.getAllitems(strtext);
-        Adapter_for_item_list adapter=new Adapter_for_item_list(datalist,getActivity(),strtext);
-        RCVcaterory_item.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+
+           // Log.i("String",strtext);
+            List<Model_category_item> datalist = dbManager.getAllitems(strtext);
+            Adapter_for_item_list adapter = new Adapter_for_item_list(datalist, getActivity(), strtext);
+            RCVcaterory_item.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+
 
 
 
@@ -65,8 +72,8 @@ public class Fragment2 extends Fragment {
             }
         });
 
-        TextView tv=(TextView)view.findViewById(R.id.fragment2text);
-        tv.setText(strtext);
+     /*   TextView tv=(TextView)view.findViewById(R.id.fragment2text);
+        tv.setText(strtext);*/
         return view;
     }
 
