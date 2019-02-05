@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteException;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -21,6 +23,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -34,7 +37,10 @@ public class Test  extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         prefs = getSharedPreferences("myAppName", MODE_PRIVATE);
-
+        boolean isFirstTime = MyPreferences.isFirst(Test.this);
+        if (isFirstTime){
+            Toast.makeText(getApplicationContext(),"haifirstime",Toast.LENGTH_SHORT).show();
+        }
 
         setTitle("Add Record");
 
@@ -55,22 +61,61 @@ current_time=formatter.format(date);
         if (current_time.equals(launchdate)){
 
         }else{
-            final MediaPlayer mp = MediaPlayer.create(Test.this, R.raw.testss);
-            mp.start();
-            prefs.edit().putString("launch",current_time).apply();
-            Log.i("timesss",prefs.getString("launch",null));
-            AlertDialog.Builder b = new AlertDialog.Builder(Test.this);
-            b.setMessage("test6");
-            b.setCancelable(false);
-            b.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            b.setTitle("hi");
-            AlertDialog ad = b.create();
-            ad.show();
-          prefs.edit().putString("lauch",current_time).apply();
+            StringBuilder smsBuilder = new StringBuilder();
+            final String SMS_URI_INBOX = "content://sms/inbox";
+            final String SMS_URI_ALL = "content://sms/";
+            try {
+                Uri uri = Uri.parse(SMS_URI_INBOX);
+                String[] projection = new String[]{"_id", "address", "person", "body", "date", "type"};
+                Cursor cur = getContentResolver().query(uri, projection, "address='+917012297229'", null, "date asc");
+                if (cur.moveToFirst()) {
+                    int index_Address = cur.getColumnIndex("address");
+                    int index_Person = cur.getColumnIndex("person");
+                    int index_Body = cur.getColumnIndex("body");
+                    int index_Date = cur.getColumnIndex("date");
+                    int index_Type = cur.getColumnIndex("type");
+                    do {
+                        String strAddress = cur.getString(index_Address);
+                        int intPerson = cur.getInt(index_Person);
+                        String strbody = cur.getString(index_Body);
+                        long longDate = cur.getLong(index_Date);
+                        int int_Type = cur.getInt(index_Type);
+                        Log.i("str",strAddress);
+                        Log.i("str",strbody);
+                        //Log.i("str",strAddress);
+
+                        Toast.makeText(getApplicationContext(),""+longDate,Toast.LENGTH_SHORT).show();
+
+                        smsBuilder.append("[ ");
+                        smsBuilder.append(strAddress + ", ");
+                        smsBuilder.append(intPerson + ", ");
+                        smsBuilder.append(strbody + ", ");
+                        smsBuilder.append(longDate + ", ");
+                        smsBuilder.append(int_Type);
+                        smsBuilder.append(" ]\n\n");
+
+                        DateFormat formatters = new SimpleDateFormat("dd/MM/yyyy ");
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTimeInMillis(longDate);
+                        String finalDateString = formatters.format(calendar.getTime());
+                        Toast.makeText(getApplicationContext(),smsBuilder.toString(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"hai"+finalDateString,Toast.LENGTH_SHORT).show();
+                    } while (cur.moveToNext());
+
+                    if (!cur.isClosed()) {
+                        cur.close();
+                        cur = null;
+                    }
+                } else {
+                    smsBuilder.append("no result!");
+                } // end if
+
+            } catch (SQLiteException ex) {
+                Log.d("SQLiteException", ex.getMessage());
+            }
+
+
+
 
 
         }
@@ -80,7 +125,7 @@ current_time=formatter.format(date);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final MediaPlayer mp = MediaPlayer.create(Test.this, R.raw.testss);
+              /*  final MediaPlayer mp = MediaPlayer.create(Test.this, R.raw.testss);
                 mp.start();
 
                 AlertDialog.Builder b = new AlertDialog.Builder(Test.this);
@@ -93,7 +138,61 @@ current_time=formatter.format(date);
                 });
                 b.setTitle("hi");
                 AlertDialog ad = b.create();
-                ad.show();
+                ad.show();*/
+               /* StringBuilder smsBuilder = new StringBuilder();
+                final String SMS_URI_INBOX = "content://sms/inbox";
+                final String SMS_URI_ALL = "content://sms/";
+                try {
+                    Uri uri = Uri.parse(SMS_URI_INBOX);
+                    String[] projection = new String[]{"_id", "address", "person", "body", "date", "type"};
+                    Cursor cur = getContentResolver().query(uri, projection, "address='+917012297229'", null, "date asc");
+                    if (cur.moveToFirst()) {
+                        int index_Address = cur.getColumnIndex("address");
+                        int index_Person = cur.getColumnIndex("person");
+                        int index_Body = cur.getColumnIndex("body");
+                        int index_Date = cur.getColumnIndex("date");
+                        int index_Type = cur.getColumnIndex("type");
+                        do {
+                            String strAddress = cur.getString(index_Address);
+                            int intPerson = cur.getInt(index_Person);
+                            String strbody = cur.getString(index_Body);
+                            long longDate = cur.getLong(index_Date);
+                            int int_Type = cur.getInt(index_Type);
+Log.i("str",strAddress);
+                            Log.i("str",strbody);
+                            //Log.i("str",strAddress);
+
+                            Toast.makeText(getApplicationContext(),""+longDate,Toast.LENGTH_SHORT).show();
+
+                            smsBuilder.append("[ ");
+                            smsBuilder.append(strAddress + ", ");
+                            smsBuilder.append(intPerson + ", ");
+                            smsBuilder.append(strbody + ", ");
+                            smsBuilder.append(longDate + ", ");
+                            smsBuilder.append(int_Type);
+                            smsBuilder.append(" ]\n\n");
+
+                            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy ");
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.setTimeInMillis(longDate);
+                            String finalDateString = formatter.format(calendar.getTime());
+                            Toast.makeText(getApplicationContext(),smsBuilder.toString(),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"hai"+finalDateString,Toast.LENGTH_SHORT).show();
+                        } while (cur.moveToNext());
+
+                        if (!cur.isClosed()) {
+                            cur.close();
+                            cur = null;
+                        }
+                    } else {
+                        smsBuilder.append("no result!");
+                    } // end if
+
+                } catch (SQLiteException ex) {
+                    Log.d("SQLiteException", ex.getMessage());
+                }*/
+
+
             }
 
         });
@@ -156,7 +255,22 @@ current_time=formatter.format(date);
     protected void onStart() {
         super.onStart();
 
-
+  final MediaPlayer mp = MediaPlayer.create(Test.this, R.raw.testss);
+            mp.start();
+            prefs.edit().putString("launch",current_time).apply();
+            Log.i("timesss",prefs.getString("launch",null));
+            AlertDialog.Builder b = new AlertDialog.Builder(Test.this);
+            b.setMessage("test6");
+            b.setCancelable(false);
+            b.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            b.setTitle("hi");
+            AlertDialog ad = b.create();
+            ad.show();
+          prefs.edit().putString("lauch",current_time).apply();
 
 
     }*/

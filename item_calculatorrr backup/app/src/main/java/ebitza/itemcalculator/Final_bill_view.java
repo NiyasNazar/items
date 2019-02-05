@@ -59,7 +59,7 @@ public class Final_bill_view extends AppCompatActivity {
     RelativeLayout mainLa;
     ImageView imss;
     int total = 0;
-    Button clickbalance;
+    Button sales;
     EditText Enter_balance;
     TextView Viewbalance;
 
@@ -69,6 +69,14 @@ public class Final_bill_view extends AppCompatActivity {
         setContentView(R.layout.activity_final_bill_view);
         linearLayout = (LinearLayout) findViewById(R.id.lltbl);
         TextView tv = (TextView) findViewById(R.id.tvtotalprice);
+        sales=(Button)findViewById(R.id.btn_sale);
+        sales.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+              dbManager.CreateDynamicTablesmysales();
+                dbManager.deletetable();
+            }
+        });
         final ProgressDialog pd = new ProgressDialog(Final_bill_view.this);
         pd.setMessage("Processing ...");
         relativeLayout = (RelativeLayout) findViewById(R.id.containers);
@@ -155,8 +163,8 @@ public class Final_bill_view extends AppCompatActivity {
 
                 pd.dismiss();
                 String pack = "com.whatsapp";
-                dbManager.CreateDynamicTablesmysales();
-                dbManager.deletetable();
+                /*dbManager.CreateDynamicTablesmysales();
+                dbManager.deletetable();*/
                 String bitmapPath = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "title", null);
                 Uri bitmapUri = Uri.parse(bitmapPath);
                 Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
@@ -231,6 +239,16 @@ public class Final_bill_view extends AppCompatActivity {
             finish();
         }
 
+
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        Intent is=new Intent(getApplicationContext(),MainActivity.class);
+      //  is.putExtra("str",tablename);
+        startActivity(is);
+        finish();
 
     }
 }
