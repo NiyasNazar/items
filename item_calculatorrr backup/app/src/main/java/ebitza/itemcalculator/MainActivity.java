@@ -36,6 +36,7 @@ String TAG="TAG";
     Calendar alarmcalendar;
     String current_time;
     String status;
+    ImageView search;
 DBManager dbManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,15 @@ DBManager dbManager;
         prefs = getSharedPreferences("myAppName", MODE_PRIVATE);
         prefs1 = getSharedPreferences("warning", MODE_PRIVATE);
         setContentView(R.layout.activity_main);
+search=(ImageView)findViewById(R.id.icon_search);
 
+search.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        Intent is=new Intent(getApplicationContext(),Main2Activity.class);
+        startActivity(is);
+    }
+});
        // prefs1.edit().putString("status","Yes").apply();
 
         status=prefs1.getString("status",null);
@@ -345,40 +354,10 @@ public void reminder(){
 
 
 }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        getMenuInflater().inflate(R.menu.ss, menu);
-
-        MenuItem search = menu.findItem(R.id.search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(search);
-        search(searchView);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        return super.onOptionsItemSelected(item);
-    }
 
 
-    private void search(SearchView searchView) {
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
 
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-
-                //mAdapter.getFilter().filter(newText);
-                return true;
-            }
-        });
-    }
 
 
 

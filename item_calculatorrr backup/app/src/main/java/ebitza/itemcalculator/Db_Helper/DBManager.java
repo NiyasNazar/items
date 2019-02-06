@@ -18,6 +18,7 @@ import ebitza.itemcalculator.Models.Model_bill;
 import ebitza.itemcalculator.Models.Model_category;
 import ebitza.itemcalculator.Models.Model_category_item;
 import ebitza.itemcalculator.Models.Model_sales;
+import ebitza.itemcalculator.Search_views.SearchResult;
 
 public class DBManager {
     private DatabaseHelper dbHelper;
@@ -397,7 +398,33 @@ model_sales.setDate(cursor.getString(5));
 
 
 
+    public List<SearchResult> getAllitemsearch(String tablename) {
+        List<SearchResult> newResults = new ArrayList<>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + tablename;
 
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                SearchResult category_model = new SearchResult();
+                //category_model.setItem_id((cursor.getString(0)));
+                category_model.setTitle(cursor.getString(1));
+              //  category_model.setItemprice(cursor.getString(2));
+               // category_model.set_img(cursor.getBlob(3));
+               // category_model.setItemquantity(cursor.getString(4));
+              //  byte[] aa=cursor.getBlob(3);
+              //  Log.i("checkimage", Arrays.toString(aa));
+                // Adding contact to list
+                newResults.add(category_model);
+            } while (cursor.moveToNext());
+        }
+
+        // return contact list
+        return newResults;
+    }
 
 
 

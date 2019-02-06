@@ -125,6 +125,7 @@ current_time=formatter.format(date);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(Test.this, Main2Activity.class));
               /*  final MediaPlayer mp = MediaPlayer.create(Test.this, R.raw.testss);
                 mp.start();
 
