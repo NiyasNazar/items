@@ -4,8 +4,14 @@ public class SearchResult  {
         private String title;
         private String description;
         private String iconUrl;
+        private String item_id;
+    private String item_price;
+    private String item_Quantity;
 
-        public SearchResult() {
+
+
+
+    public SearchResult() {
             this.title = title;
             this.description = description;
             this.iconUrl = iconUrl;
@@ -34,4 +40,28 @@ public class SearchResult  {
         public void setIconUrl(String iconUrl) {
             this.iconUrl = iconUrl;
         }
+
+    public String getItem_id() {
+        return item_id;
+    }
+
+    public void setItem_id(String item_id) {
+        this.item_id = item_id;
+    }
+
+    public String getItem_price() {
+        return item_price;
+    }
+
+    public void setItem_price(String item_price) {
+        this.item_price = item_price;
+    }
+
+    public String getItem_Quantity() {
+        return item_Quantity;
+    }
+
+    public void setItem_Quantity(String item_Quantity) {
+        this.item_Quantity = item_Quantity;
+    }
 }

@@ -155,12 +155,26 @@ android:gravity="center"
     <ListView
         android:layout_below="@id/table_layout"
 
-android:layout_above="@+id/llb"
+android:layout_above="@id/btn_sale"
         android:id="@+id/records_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp">
     </ListView>
+        <Button
+
+
+            android:id="@+id/btn_sale"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp"
+            android:textColor="#FFFFFF"
+         android:layout_above="@id/llb"
+            android:background="@color/colorAccent"
+            android:layout_weight="1"
+            android:text="Save"
+            android:layout_width="match_parent"
+            android:layout_height="35dp" />
     <LinearLayout
         android:orientation="vertical"
 android:background="#02D09D"
@@ -172,7 +186,7 @@ android:layout_marginBottom="2dp"
         <TableLayout
 android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:layout_above="@id/llb"
+
             android:id="@+id/tt"
 android:gravity="center"
             android:layout_marginBottom="15dp"
@@ -267,17 +281,7 @@ android:textStyle="bold"
                 android:layout_height="35dp" />
 
         </LinearLayout>
-        <Button
-            android:id="@+id/btn_sale"
-android:layout_marginBottom="10dp"
-            android:layout_marginRight="50dp"
-            android:layout_marginLeft="50dp"
-            android:textColor="#FFFFFF"
-            android:background="@color/colorAccent"
-            android:layout_weight="1"
-            android:text="Sale"
-            android:layout_width="match_parent"
-            android:layout_height="35dp" />
+
 
 
         <LinearLayout

@@ -36,12 +36,13 @@ public class Main2Activity extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
         dbManager=new DBManager(getApplicationContext());
         dbManager.open();
+        dbManager.CreateDynamicTablesforallproducts();
         mRecyclerView = (RecyclerView)findViewById(R.id.recyclerview_search_result);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mSearchView = (PersistentSearchView) findViewById(R.id.searchview);
         mSearchTintView = findViewById(R.id.view_search_tint);
-        mResultAdapter = new SearchResultAdapter(new ArrayList<SearchResult>());
+        mResultAdapter = new SearchResultAdapter(new ArrayList<SearchResult>(),getApplicationContext());
     mRecyclerView.setAdapter(mResultAdapter);
 
 
@@ -109,6 +110,7 @@ public class Main2Activity extends AppCompatActivity {
 
             @Override
             public void onSearch(String string) {
+
                 Toast.makeText(Main2Activity.this, string + " Searched", Toast.LENGTH_LONG).show();
                 mRecyclerView.setVisibility(View.VISIBLE);
                 fillResultToRecyclerView(string);
